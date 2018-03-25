@@ -1,4 +1,4 @@
-" This file is copied directly from http://vi.stackexchange.com/a/5988/1060
+" Originally from http://vi.stackexchange.com/a/5988/1060
 
 syn keyword registerKeyword r0 r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 r13 r14 r15 
 syn keyword registerKeyword r16 r17 r18 r19 r20 r21 r22 r23 r24 r25 r26 r27 r28 r29 r30 r31 
@@ -20,6 +20,19 @@ syn keyword preprocType u32 u16 u8
 hi def link preprocWord PreProc
 hi def link preprocType Type
 
+syn match includeLine '^#include\s.*$' contains=filenameString
+syn match defineLine '^#define\s'
+syn match filenameString '".*"' contained
+
+hi def link filenameString string
+hi def link includeLine include
+hi def link defineLine define
+
+" Macros
+
+" syn match macroWord "\s[A-Z0-9_]\+"
+
+" hi def link macroWord Function
 
 " Define constant registers from PRU
 
@@ -31,7 +44,13 @@ syn keyword constantKeyword C16 C17 C18 C19 C20 C21 C22 C23 C24 C25 C26 C27 C28 
 
 hi def link constantKeyword PreProc
 
+" Define labels
+
+syn match label '^[^ ]\+:'
+
+hi def link label Label
+
 " Define comments
 
-syn match synComment "//.*$"
+syn match synComment "[;|//].*$"
 hi def link synComment Comment
