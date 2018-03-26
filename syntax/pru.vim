@@ -1,4 +1,4 @@
-" Originally from http://vi.stackexchange.com/a/5988/1060
+" This file is copied directly from http://vi.stackexchange.com/a/5988/1060
 
 syn keyword registerKeyword r0 r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 r13 r14 r15 
 syn keyword registerKeyword r16 r17 r18 r19 r20 r21 r22 r23 r24 r25 r26 r27 r28 r29 r30 r31 
@@ -20,19 +20,22 @@ syn keyword preprocType u32 u16 u8
 hi def link preprocWord PreProc
 hi def link preprocType Type
 
+syn match filenameString '".*"' contained
 syn match includeLine '^#include\s.*$' contains=filenameString
 syn match defineLine '^#define\s'
-syn match filenameString '".*"' contained
+syn match ifdefLine '^#if[n]\?def\s'
+syn match ifdefLine '\v^#endif[\t\n ]'
 
 hi def link filenameString string
 hi def link includeLine include
 hi def link defineLine define
+hi def link ifdefLine PreProc
 
-" Macros
-
-" syn match macroWord "\s[A-Z0-9_]\+"
-
-" hi def link macroWord Function
+" Instruction mnemonics
+syn keyword instructionKeyword add adc sub suc rsb rsc
+syn keyword instructionKeyword lsl lsr and or xor not min max clr set scan lmbd
+syn keyword instructionKeyword mov ldi mvib mviw mvid lbbo sbbo lbco sbco zero
+syn keyword instructionKeyword jmp jal call ret qbgt qbge qblt qble qbeq qbne qba qbbs qbbc wbs wbc halt slp
 
 " Define constant registers from PRU
 
@@ -48,9 +51,10 @@ hi def link constantKeyword PreProc
 
 syn match label '^[^ ]\+:'
 
-hi def link label Label
+hi def link label Identifier
 
 " Define comments
 
-syn match synComment "[;|//].*$"
+syn match synComment ";.*$"
+syn match synComment "//.*$"
 hi def link synComment Comment
